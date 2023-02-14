@@ -27,14 +27,14 @@ function App() {
   const [userSelect, setUserSelect] = useState(null);
 
   const play = (userChoice) => {
-    setUserSelect(choice[userSelect]);
+    setUserSelect(choice[userChoice]);
   };
 
   return (
     <div>
       <div className="main">
         <Box title="you" item={userSelect} />
-        <Box title="computer" />
+        {/* <Box title="computer" /> */}
       </div>
       <div className="main">
         <button onClick={() => play("rock")}>Rock</button>
