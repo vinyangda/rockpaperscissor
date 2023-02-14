@@ -63,8 +63,8 @@ function App() {
   return (
     <div>
       <div className="main">
-        <Box title="you" item={userSelect} result={result} />
-        <Box title="computer" item={computerSelect} result={result} />
+        <Box title="You" item={userSelect} result={result} />
+        <Box title="Computer" item={computerSelect} result={result} />
       </div>
       <div className="main">
         <button onClick={() => play("rock")}>Rock</button>
