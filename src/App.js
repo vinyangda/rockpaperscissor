@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import Box from "./components/Box";
 
+//*필요한 컴포넌트*
 //타이틀, 사진, 결과 컴포넌트들
 //나 vs 컴퓨터 >> 2개의 박스
 //나는 가위, 바위, 보 버튼 클릭
@@ -12,7 +13,7 @@ import Box from "./components/Box";
 const choice = {
   rock: {
     name: "Rock",
-    img: "https://img.freepik.com/free-photo/design-space-paper-textured-background_53876-42312.jpg",
+    img: "https://www.thoughtco.com/thmb/Uh06xuGPA6HKNbaxpNsOjR7CjPY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/rhyolite-1057171452-5c911d4b46e0fb000187a397.jpg",
   },
   scissors: {
     name: "Scissors",
@@ -20,23 +21,40 @@ const choice = {
   },
   paper: {
     name: "Paper",
-    img: "https://www.thoughtco.com/thmb/Uh06xuGPA6HKNbaxpNsOjR7CjPY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/rhyolite-1057171452-5c911d4b46e0fb000187a397.jpg",
+    img: "https://img.freepik.com/free-photo/design-space-paper-textured-background_53876-42312.jpg",
   },
 };
 function App() {
   const [userSelect, setUserSelect] = useState(null);
   const [computerSelect, setComputerSelect] = useState(null);
+  const [result, setResult] = useState("");
 
   const play = (userChoice) => {
     setUserSelect(choice[userChoice]);
-
     let computerChoice = randomChoice();
     setComputerSelect(computerChoice);
+    setResult(judgement(choice[userChoice], computerChoice));
+    console.log(userChoice);
   };
+
+  const judgement = (user, computer) => {
+    if (user.name == computer.name) {
+      return "Tie";
+    } else if (user.name == "Rock") {
+      return computer.name == "Scissors" ? "WIN" : "LOSE";
+    } else if (user.name == "Scissors") {
+      return computer.name == "Paper" ? "WIN" : "LOSE";
+    } else if (user.name == "Paper") {
+      return computer.name == "Rock" ? "WIN" : "LOSE";
+    }
+  };
+  //user == computer >> tie
+  //user == rock / computer == scissors  >> user win
+  //user == rock / computer == paper     >> user lose
 
   const randomChoice = () => {
     let itemArray = Object.keys(choice); //객체에 키값만 뽑아서 배열로 만들어준다
-    console.log("itemArray", itemArray);
+
     let randomItem = Math.floor(Math.random() * itemArray.length);
     let finalItem = itemArray[randomItem];
     return choice[finalItem];
@@ -45,8 +63,8 @@ function App() {
   return (
     <div>
       <div className="main">
-        <Box title="you" item={userSelect} />
-        <Box title="computer" item={computerSelect} />
+        <Box title="you" item={userSelect} result={result} />
+        <Box title="computer" item={computerSelect} result={result} />
       </div>
       <div className="main">
         <button onClick={() => play("rock")}>Rock</button>
